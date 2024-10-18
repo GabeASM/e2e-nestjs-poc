@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: backend
+    environment:
+      - NODE_ENV=test
+    ports:
+      - "3000:3000"
+    networks:
+      - e2e-test
+    depends_on:
+      - postgres14-encryption
+
+  postgres14-encryption:
+    image: postgres:14
+    container_name: postgres14-encryption
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres-encrypted'
+      POSTGRES_DB: 'e2epoc'
+    networks:
+      - e2e-test
+
+  test-e2e:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: test-e2e
+    depends_on:
+      - backend
+    networks:
+      - e2e-test
+    command: npm run test:e2e
+
+networks:
+  e2e-test:
+    driver: bridge
