@@ -1,85 +1,69 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Pruebas E2E NestJS
+El presente proyecto es el backend de la aplicación, la cual consisten en un sistema que encripta texto usando el algoritmo BlowFish. 
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+La idea de la aplicación es poder enviar mensajes encriptados a varias personas de manera sencilla desde el teléfono. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+## SetUp
 
 ```bash
-$ npm install
+# iniciar la aplicacion (necesario para las pruebas del frontend)
+$ sudo docker-compose -f docker-compose.yml up --build
+
+# Ejecutar set de pruebas E2E.
+$ sudo docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from test-e2e
+
+# Terminar la ejecucion de los contenedores (Hacer cada vez que se quiera detener la aplicacion por completo o una vez terminado de ejecutar el set de pruebas).
+sudo docker-compose down --remove-orphans
+
+# Importante: evitar utilizar CTRL + C para terminar el proceso de ejecucion de los contenedores
 ```
 
-## Compile and run the project
 
-```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
+# Pruebas End-to-End (E2E)
 
-# production mode
-$ npm run start:prod
-```
+## ¿Qué son las pruebas E2E?
 
-## Run tests
+Las pruebas **End-to-End (E2E)** son un tipo de pruebas que validan todo el flujo de una aplicación, desde el inicio hasta el final, verificando que todos los componentes del sistema funcionen correctamente en conjunto. Estas pruebas simulan escenarios de uso real para asegurarse de que todos los elementos de la aplicación interactúan como se espera, incluyendo la interfaz de usuario (UI), el backend, bases de datos y otros servicios externos.
 
-```bash
-# unit tests
-$ npm run test
+El objetivo principal de las pruebas E2E es garantizar que las funcionalidades críticas de la aplicación funcionen correctamente cuando se ejecutan en un entorno completo y realista.
 
-# e2e tests
-$ npm run test:e2e
+## Diferencias con otros tipos de pruebas
 
-# test coverage
-$ npm run test:cov
-```
+1. **Pruebas unitarias**: Las pruebas unitarias están diseñadas para verificar partes pequeñas y aisladas del código, como funciones o clases individuales. Estas pruebas no cubren la integración entre diferentes componentes.
 
-## Resources
+2. **Pruebas de integración**: Las pruebas de integración validan la interacción entre varios componentes o módulos del sistema, pero no cubren el flujo completo de la aplicación desde el inicio hasta el final.
 
-Check out a few resources that may come in handy when working with NestJS:
+3. **Pruebas funcionales**: Este tipo de pruebas se centra en verificar que una función específica de la aplicación funcione según lo previsto. Sin embargo, no cubren la interacción de la aplicación en su totalidad, como lo hacen las pruebas E2E.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Comparación:
 
-## Support
+| Tipo de Prueba    | Alcance                  | Objetivo                                         |
+|-------------------|--------------------------|--------------------------------------------------|
+| **Unitarias**     | Partes individuales       | Verificar que funciones o clases aisladas funcionan correctamente |
+| **Integración**   | Módulos o componentes     | Validar que los componentes del sistema interactúen correctamente |
+| **E2E**           | Todo el sistema           | Simular un flujo completo de usuario y garantizar que todo funcione correctamente desde el inicio hasta el final |
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## ¿Por qué son importantes las pruebas E2E?
 
-## Stay in touch
+Las pruebas E2E son fundamentales porque aseguran que la aplicación funcione como un todo, simulando cómo un usuario real interactuaría con ella. Estas pruebas son clave para identificar problemas que pueden surgir en la interacción entre componentes, que no se detectan con pruebas unitarias o de integración.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Beneficios de las pruebas E2E:
 
-## License
+- **Simulan casos reales**: Las pruebas E2E ejecutan escenarios de uso real para validar la aplicación en situaciones que los usuarios podrían experimentar.
+- **Detectan errores de integración complejos**: Verifican la interacción entre los diferentes servicios o componentes de la aplicación.
+- **Aseguran la calidad del producto**: Garantizan que la aplicación sea funcional en un entorno de producción completo y que no se rompan flujos críticos.
+  
+## ¿Por qué realizar pruebas E2E en el backend?
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Realizar pruebas E2E en el backend es crucial porque asegura que todas las funcionalidades ofrecidas por la API o servicios backend funcionen correctamente cuando interactúan con otros sistemas y con la UI. Además, garantiza que los datos fluyan correctamente entre el frontend y el backend, y que las respuestas del servidor sean las esperadas.
+
+### Razones para realizar pruebas E2E en el backend:
+
+1. **Validación de la API**: Confirma que las API respondan correctamente a las solicitudes del frontend, incluyendo la validación de los endpoints, la correcta manipulación de datos y la integridad de las respuestas.
+   
+2. **Interacción con servicios externos**: En muchos casos, el backend interactúa con otros servicios o bases de datos. Las pruebas E2E aseguran que estas interacciones se realicen sin problemas.
+   
+3. **Prevención de regresiones**: Al tener pruebas E2E, es más fácil detectar errores de regresión que puedan surgir por cambios en el backend.
+
+4. **Seguridad y manejo de autenticación**: En muchas aplicaciones, el backend se encarga de la autenticación y autorización de usuarios. Las pruebas E2E aseguran que estas funcionalidades críticas se ejecuten correctamente.
