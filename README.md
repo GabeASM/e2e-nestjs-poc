@@ -1,5 +1,5 @@
 # Pruebas E2E NestJS
-El presente proyecto es el backend de la aplicación, la cual consisten en un sistema que encripta texto usando el algoritmo BlowFish. 
+El presente proyecto es el backend de la aplicación, la cual consiste en un sistema que encripta texto usando el algoritmo BlowFish. 
 
 La idea de la aplicación es poder enviar mensajes encriptados a varias personas de manera sencilla desde el teléfono. 
 
